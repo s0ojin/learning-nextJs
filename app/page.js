@@ -1,14 +1,14 @@
-import { connectDB } from "@/utils/database";
-
-export default async function Home() {
-  const db = (await connectDB).db("next");
-  let result = await db.collection("post").find().toArray();
-
+export default function Home() {
   return (
     <div>
-      <p>Hi</p>
-      <p>{result.title}</p>
-      <p>{result.content}</p>
+      <form action="/api/time" method="get" className="flex justify-center">
+        <button
+          type="submit"
+          className="bg-slate-500 text-white p-5 rounded-[10px]"
+        >
+          현재 시간을 알려드림미당
+        </button>
+      </form>
     </div>
   );
 }
