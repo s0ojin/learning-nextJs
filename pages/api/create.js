@@ -1,0 +1,20 @@
+//get 요청하는 법
+//app/api/어쩌고.js
+//pages/api/어쩌고.js
+
+import { connectDB } from "@/utils/database";
+
+export default async function createPost(req, res) {
+  if (req.method === "POST") {
+    if (req.body.title === "") {
+      return res.status(500).json("제목을 입력하세요");
+    }
+    if (req.body.content === "") {
+      return res.status(500).json("내용을 입력하세요");
+    }
+
+    const db = (await connectDB).db("next");
+    let article = await db.collection("post").insertOne(req.body);
+    res.redirect(302, "/list");
+  }
+}
