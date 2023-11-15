@@ -18,6 +18,9 @@ export default function RootLayout({ children }) {
             <Link href="/">LearningNEXTJS</Link>
           </div>
           <Link href="/list">List</Link>
+          <form action="/api/time" method="get" className="flex justify-center">
+            <Link href="/api/time">Now</Link>
+          </form>
         </div>
         <div>{children}</div>
       </body>
