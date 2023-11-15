@@ -2,6 +2,8 @@ import { connectDB } from "@/utils/database";
 import Link from "next/link";
 import ListItem from "./ListItem";
 
+export const dynamic = "force-dynamic";
+
 export default async function List() {
   const db = (await connectDB).db("next");
   let result = await db.collection("post").find().toArray();
