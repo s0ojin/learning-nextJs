@@ -1,6 +1,8 @@
 import { connectDB } from "@/utils/database";
 import Link from "next/link";
 import ListItem from "./ListItem";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +14,8 @@ export default async function List() {
     return item;
   });
 
+  let session = await getServerSession(authOptions);
+
   return (
     <div className="p-3 bg-slate-200">
       <Link href={"write"}>
@@ -19,7 +23,7 @@ export default async function List() {
           새로운 글 작성하기
         </div>
       </Link>
-      <ListItem result={result} />
+      <ListItem result={result} author={session?.user.email} />
     </div>
   );
 }
