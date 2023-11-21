@@ -1,6 +1,19 @@
 //post 요청하는 방법 form method post로 보내기
 
-export default function Write() {
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
+export default async function Write() {
+  let session = await getServerSession(authOptions);
+
+  if (!session) {
+    console.log("로그인 후 이용할 수 있습니다.");
+    redirect(
+      "/api/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2Fsignup"
+    );
+  }
+
   return (
     <div className="flex flex-col items-center w-screen">
       <h4 className="font-bold text-[30px] text-slate-700">글작성</h4>

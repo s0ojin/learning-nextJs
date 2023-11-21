@@ -33,7 +33,12 @@ export default async function RootLayout({ children }) {
                 <LogoutBtn />
               </>
             ) : (
-              <LoginBtn />
+              <>
+                <span className="mr-2">
+                  <Link href="/signup">sign up</Link>
+                </span>
+                <LoginBtn />
+              </>
             )}
           </div>
         </div>

@@ -7,11 +7,11 @@ export default async function deletePost(req, res) {
   if (req.method === "DELETE") {
     const db = (await connectDB).db("next");
 
-    let session = await getServerSession(authOptions);
+    let session = await getServerSession(req, res, authOptions);
 
     let post = await db
       .collection("post")
-      .findOne({ _id: new ObjectId(req.body) });
+      .findOne({ _id: new ObjectId(req.query.postId) });
 
     if (session.user.email === post.author) {
       let result = await db
