@@ -1,6 +1,6 @@
 export default function SignUp() {
   return (
-    <div className="">
+    <div>
       <form
         className="flex flex-col gap-4 p-10"
         method="POST"

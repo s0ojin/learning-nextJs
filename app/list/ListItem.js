@@ -25,7 +25,6 @@ export default function ListItem({ result, author }) {
                 onClick={(e) => {
                   fetch(`/api/delete/${item._id}`, {
                     method: "DELETE",
-                    body: item._id,
                   })
                     .then((res) => {
                       if (res.status === 200 || res.status === 500) {

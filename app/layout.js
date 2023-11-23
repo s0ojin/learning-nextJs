@@ -42,7 +42,7 @@ export default async function RootLayout({ children }) {
             )}
           </div>
         </div>
-        <div>{children}</div>
+        <div className="p-10">{children}</div>
       </body>
     </html>
   );
