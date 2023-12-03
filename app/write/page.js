@@ -50,7 +50,9 @@ export default async function Write() {
           }}
         />
         <input hidden name="imageURL" defaultValue={preview} />
-        <Image src={preview} alt="미리보기" width="500" height="500" />
+        {preview !== "" && (
+          <Image src={preview} alt="미리보기" width="500" height="500" />
+        )}
         <button
           type="submit"
           className="bg-slate-500 text-white h-[3rem] rounded-[10px]"

@@ -7,23 +7,23 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
 
 export default async function createPost(req, res) {
-  console.log(req.body);
-  let session = await getServerSession(req, res, authOptions);
-
-  if (session) {
-    req.body.author = session.user.email;
-  }
-
   if (req.method === "POST") {
-    if (req.body.title === "") {
-      return res.status(500).json("제목을 입력하세요");
-    }
-    if (req.body.content === "") {
-      return res.status(500).json("내용을 입력하세요");
-    }
+    let session = await getServerSession(req, res, authOptions);
 
-    const db = (await connectDB).db("next");
-    let article = await db.collection("post").insertOne(req.body);
-    res.redirect(302, "/list");
+    if (session) {
+      req.body.author = session.user.email;
+      if (req.body.title === "") {
+        return res.status(500).json("제목을 입력하세요");
+      }
+      if (req.body.content === "") {
+        return res.status(500).json("내용을 입력하세요");
+      }
+
+      const db = (await connectDB).db("next");
+      let article = await db.collection("post").insertOne(req.body);
+      res.redirect(302, "/list");
+    } else {
+      res.status(500).json("로그인 후 글을 작성할 수 있습니다.");
+    }
   }
 }
