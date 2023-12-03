@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
 
 export default async function createPost(req, res) {
+  console.log(req.body);
   let session = await getServerSession(req, res, authOptions);
 
   if (session) {

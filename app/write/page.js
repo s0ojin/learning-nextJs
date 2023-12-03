@@ -1,21 +1,12 @@
-//post 요청하는 방법 form method post로 보내기
+"use client";
 
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import Image from "next/image";
+import { useState } from "react";
 
 export default async function Write() {
-  let session = await getServerSession(authOptions);
-
-  if (!session) {
-    console.log("로그인 후 이용할 수 있습니다.");
-    redirect(
-      "/api/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2Fsignup"
-    );
-  }
-
+  const [preview, setPreview] = useState("");
   return (
-    <div className="flex flex-col items-center w-screen">
+    <div className="flex flex-col items-center w-full">
       <h4 className="font-bold text-[30px] text-slate-700">글작성</h4>
       <form
         action="/api/create"
@@ -26,12 +17,40 @@ export default async function Write() {
           name="title"
           placeholder="제목을 입력하세요"
           className="bg-slate-200 p-2"
-        ></input>
+        />
         <textarea
           name="content"
           placeholder="내용을 입력하세요"
           className="bg-slate-200 h-[300px] p-4"
-        ></textarea>
+        />
+        <input
+          type="file"
+          name="file"
+          accept="image/*"
+          onChange={async (e) => {
+            let file = e.target.files[0];
+            let filename = encodeURIComponent(file.name);
+            let res = await fetch(`/api/image?file=${filename}`);
+            res = await res.json();
+            //S3 업로드
+            const formData = new FormData();
+            Object.entries({ ...res.fields, file }).forEach(([key, value]) => {
+              formData.append(key, value);
+            });
+            let result = await fetch(res.url, {
+              method: "POST",
+              body: formData,
+            });
+
+            if (result.ok) {
+              setPreview(result.url + "/" + filename);
+            } else {
+              console.log("실패");
+            }
+          }}
+        />
+        <input hidden name="imageURL" defaultValue={preview} />
+        <Image src={preview} alt="미리보기" width="500" height="500" />
         <button
           type="submit"
           className="bg-slate-500 text-white h-[3rem] rounded-[10px]"
