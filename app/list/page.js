@@ -17,7 +17,7 @@ export default async function List() {
   let session = await getServerSession(authOptions);
 
   return (
-    <div className="p-3 bg-slate-200">
+    <div className="p-3 dark:bg-slate-800">
       <Link href={"write"}>
         <div className="h-[60px] flex justify-center items-center font-bold rounded-md mb-[50px] bg-slate-400 hover:bg-slate-500 text-white">
           새로운 글 작성하기

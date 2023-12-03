@@ -5,6 +5,7 @@ import LoginBtn from "./LoginBtn";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import LogoutBtn from "./LogoutBtn";
+import DarkMode from "./DarkMode";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex items-center gap-7 mb-[10px] bg-white p-6">
+        <div className="flex items-center gap-7 bg-white p-6 dark:bg-slate-800 dark:text-white">
           <div className="font-bold text-[20px]">
             <Link href="/">LearningNEXTJS</Link>
           </div>
@@ -41,8 +42,11 @@ export default async function RootLayout({ children }) {
               </>
             )}
           </div>
+          <DarkMode />
         </div>
-        <div className="p-10">{children}</div>
+        <div className="p-10 w-full h-real-screen bg-white dark:bg-slate-800">
+          {children}
+        </div>
       </body>
     </html>
   );
