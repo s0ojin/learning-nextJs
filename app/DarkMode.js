@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 
 export default function DarkMode() {
-  let mode = ("; " + document.cookie).split(`; mode=`).pop().split(";")[0];
   const isDark = () => {
+    let mode = ("; " + document.cookie).split(`; mode=`).pop().split(";")[0];
     return mode === "dark" ? true : false;
   };
   const [dark, setDark] = useState(isDark());
 
   useEffect(() => {
+    let mode = ("; " + document.cookie).split(`; mode=`).pop().split(";")[0];
     if (
       mode === "dark" ||
       (mode === "" && window.matchMedia("(prefers-color-scheme: dark)").matches)
@@ -24,7 +25,7 @@ export default function DarkMode() {
     <span
       className="text-[32px] cursor-pointer"
       onClick={() => {
-        if (mode === "dark") {
+        if (dark) {
           document.cookie = "mode=light; max-age=" + 3600 * 24 * 400;
         } else {
           document.cookie = "mode=dark; max-age=" + 3600 * 24 * 400;
